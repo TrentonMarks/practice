@@ -4,11 +4,16 @@ const Favorites = require('../models/favorites.js');
 
 // index/get route
 router.get('/', (req, res)=>{
-    Favorites.find({}, (err, foundFavorite)=>{
+    Favorites.find({}, (err, foundFavorites)=>{
         res.json(foundFavorites);
     });
 });
 
-
+// create/post route
+router.post('/', (req, res)=>{
+    Favorites.create(req.body, (err, createdFavorite)=>{
+        res.json(createdFavorite);
+    });
+});
 
 module.exports = router;
