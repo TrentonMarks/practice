@@ -1,14 +1,16 @@
-const app = angular.module('favorites' []);
+const app = angular.module('favorites', []);
 
 app.controller('MainController', ['$http', function($http){
+    this.favorites = [];
+    this.createForm = {};
 
     // gets all favorites in the database
     this.getFavorites = ()=>{
         $http({
             method:'GET',
             url:'/favorites'
-        }).then(()=>{
-            controller.favorites = response.data;
+        }).then(response=>{
+            this.favorites = response.data;
         });
     };
 
@@ -17,22 +19,16 @@ app.controller('MainController', ['$http', function($http){
         $http({
             method:'POST',
             url:'/favorites',
-            data: {
-                source: this.source,
-                url: this.url
-            }
-        }).then((response)=>{
-            controller.getFavorites();
+            data: this.createForm
+        }).then(response=>{
+            console.log(response.data);
+            // this.createForm = {} removes text from form once submit
+            this.createForm = {};
+            this.favorites.push(response.data);
         }, ()=>{
             console.log('error');
         });
     };
-
-
-
-
-
-
 
     // loads immediately on page load
     this.getFavorites();
