@@ -2,6 +2,7 @@ const app = angular.module('favorites', []);
 
 app.controller('MainController', ['$http', function($http){
     this.favorites = [];
+    this.indexOfEditFormToShow = null;
 
     // gets all favorites in the database
     this.getFavorites = ()=>{
@@ -35,18 +36,6 @@ app.controller('MainController', ['$http', function($http){
     };
 
     // deletes a favorite
-    // this.deleteFavorite = (id)=>{
-    //     $http({
-    //         method:'DELETE',
-    //         url:'/favorites/' + id
-    //     }).then(response =>{
-    //         console.log(response.data);
-    //         const removeByIndex = this.favorites.findIndex(favorite =>
-    //             favorite._id === id);
-    //             this.favorites.splice(removeByIndex, 1);
-    //     });
-    // };
-
     this.deleteFavorite = (favorite)=>{
         $http({
             method: 'DELETE',
@@ -56,11 +45,22 @@ app.controller('MainController', ['$http', function($http){
         });
     };
 
-
-
+    this.editFavorite = (favorite)=>{
+        $http({
+            method:'PUT',
+            url:'/favorites/' + favorite._id,
+            data: {
+                source: this.updatedSource,
+                url: this.updatedUrl
+            }
+        }).then(response =>{
+            this.indexOfEditFormToShow = null;
+            this.getFavorites();
+        });
+    };
 
 
     // loads immediately on page load
-    // this.getFavorites();
+    this.getFavorites();
 
 }]);

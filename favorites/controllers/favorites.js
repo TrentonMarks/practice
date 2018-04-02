@@ -16,10 +16,17 @@ router.post('/', (req, res)=>{
     });
 });
 
-// delete route
+// destroy/delete route
 router.delete('/:id', (req, res)=>{
     Favorites.findByIdAndRemove(req.params.id, (err, deletedFavorite)=>{
         res.json(deletedFavorite);
+    });
+});
+
+// update/put route
+router.put('/:id', (req, res)=>{
+    Favorites.findByIdAndUpdate(req.params.id, req.body, {new:true}, (err, updatedFavorite)=>{
+        res.json(updatedFavorite);
     });
 });
 
