@@ -4,16 +4,16 @@ app.controller('MainController', ['$http', function($http){
     this.favorites = [];
 
     // gets all favorites in the database
-    // this.getFavorites = ()=>{
-    //     $http({
-    //         method:'GET',
-    //         url:'/favorites'
-    //     }).then(response =>{
-    //         this.favorites = response.data;
-    //     }, error =>{
-    //         console.log(error);
-    //     });
-    // };
+    this.getFavorites = ()=>{
+        $http({
+            method:'GET',
+            url:'/favorites'
+        }).then(response =>{
+            this.favorites = response.data;
+        }, error =>{
+            console.log(error);
+        });
+    };
 
     // creates a new favorite
     this.createFavorite = ()=>{
@@ -34,8 +34,27 @@ app.controller('MainController', ['$http', function($http){
         });
     };
 
+    // deletes a favorite
+    // this.deleteFavorite = (id)=>{
+    //     $http({
+    //         method:'DELETE',
+    //         url:'/favorites/' + id
+    //     }).then(response =>{
+    //         console.log(response.data);
+    //         const removeByIndex = this.favorites.findIndex(favorite =>
+    //             favorite._id === id);
+    //             this.favorites.splice(removeByIndex, 1);
+    //     });
+    // };
 
-
+    this.deleteFavorite = (favorite)=>{
+        $http({
+            method: 'DELETE',
+            url: '/favorites/' + favorite._id
+        }).then((response)=>{
+            this.getFavorites();
+        });
+    };
 
 
 

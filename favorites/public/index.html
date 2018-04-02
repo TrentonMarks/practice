@@ -21,5 +21,15 @@
                 </form>
         </div>
 
+
+
+        <div ng-repeat="favorite in ctrl.favorites | orderBy: 'source'">
+            <p>{{favorite.source}}</p>
+            <button ng-click="ctrl.deleteFavorite(favorite)">X</button>
+        </div>
+
+
+
+
     </body>
 </html>

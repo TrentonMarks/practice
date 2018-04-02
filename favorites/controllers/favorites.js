@@ -16,4 +16,11 @@ router.post('/', (req, res)=>{
     });
 });
 
+// delete route
+router.delete('/:id', (req, res)=>{
+    Favorites.findByIdAndRemove(req.params.id, (err, deletedFavorite)=>{
+        res.json(deletedFavorite);
+    });
+});
+
 module.exports = router;
